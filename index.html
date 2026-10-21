@@ -46,13 +46,14 @@ table.wk{width:100%;border-collapse:collapse;font-size:13px;text-align:center;ma
 .ck{display:block;padding:10px 4px;border-bottom:1px solid #f1f5f9;font-size:14px}.ck input{width:auto;margin-right:6px}.ck small{color:#64748b}
 #toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;padding:10px 16px;border-radius:24px;display:none;gap:12px;align-items:center;z-index:99;font-size:13px;white-space:nowrap}#toast button{min-height:28px;padding:3px 10px;background:#10b981}
 footer{text-align:center;color:#64748b;font-size:12px;padding:14px}
+.pc i.br,.si i.br{background:#fef3c7;color:#b45309}.oh{display:flex;justify-content:space-between;align-items:center;margin:8px 0 6px;padding:3px 6px 3px 10px;background:#fef3c7;border-radius:8px;color:#92400e;font-size:13px}.oh button{min-height:28px;padding:2px 8px}.oa{display:flex;gap:6px;margin:0 0 8px}.oa button{flex:1}
 #print{display:none}
 @media print{@page{size:A4 landscape;margin:8mm}body>*:not(#print){display:none!important}body{background:#fff;padding:0}#print{display:block;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:9pt}
 .ph{display:flex;justify-content:space-between;align-items:center;background:#2d6a4f;color:#fff;padding:6px 12px;border-radius:6px;margin-bottom:5px}.ph h1{margin:0;font-size:13pt;color:#fff}.ph span{font-weight:700}
 #print table{width:100%;border-collapse:collapse;table-layout:fixed}#print td,#print th{border:1px solid #cbd5e1;padding:3px 4px;vertical-align:top}#print th{background:#2d6a4f;color:#fff;font-size:8.5pt;width:auto}#print tr>th:first-child{width:10%}
 #print ul{list-style:none;margin:0;padding:0}#print li{display:flex;justify-content:space-between;gap:4px;border-bottom:1px dotted #e2e8f0;padding:1px 0}#print li b{white-space:nowrap;color:#166534}
 #print em{display:inline-block;background:#fef3c7;color:#b45309;font-size:7.5pt;font-weight:700;padding:0 4px;border-radius:3px;margin-top:2px}.e{text-align:center;color:#cbd5e1}
-#print .tt{background:#0f172a}#print .tt2{background:#f8fafc;text-align:center;font-weight:600;font-size:8pt}.cr{text-align:right;font-size:8pt;color:#64748b;margin:4px 0 0}}
+#print .tt{background:#0f172a}#print .tt2{background:#f8fafc;text-align:center;font-weight:600;font-size:8pt}.cr{text-align:right;font-size:8pt;color:#64748b;margin:4px 0 0}.alp{break-before:page;page-break-before:always}.ag{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}.ab{border:1px solid #cbd5e1;border-radius:5px;padding:4px 6px;break-inside:avoid;page-break-inside:avoid}.ab>b{display:block;background:#2d6a4f;color:#fff;border-radius:3px;padding:1px 6px;font-size:8.5pt;margin-bottom:3px}.ao{display:grid;gap:4px}.ao>div{border-left:3px solid #f59e0b;padding-left:5px}.ao u{text-decoration:none;font-weight:700;font-size:8pt;color:#b45309}.bg{display:inline-block;background:#fef3c7;color:#b45309;font-size:7pt;font-weight:700;padding:0 4px;border-radius:3px;margin-left:3px}#print .cmp{width:100%;margin-top:4px;table-layout:auto}#print .cmp td,#print .cmp th{padding:1px 3px;font-size:7.5pt;text-align:center;border:1px solid #e2e8f0;vertical-align:middle}#print .cmp th{background:#f1f5f9;color:#334155;width:auto}#print .cmp td:first-child{text-align:left;font-weight:700}#print .cmp small{color:#64748b;font-size:6.5pt}}
 </style></head><body>
 <div class="w">
 <section id="v-home"><h1>🍏 Piano Alimentare</h1>
@@ -64,6 +65,7 @@ footer{text-align:center;color:#64748b;font-size:12px;padding:14px}
 <div id="tabs"></div><div id="dash"></div><div id="meals"></div>
 <details class="card"><summary>Riepilogo settimanale</summary><div style="overflow-x:auto"><table class="wk" id="week"></table></div></details><footer>made by MicheleRu</footer></section>
 <section id="v-db" hidden><div class="hd"><button class="gh sm" onclick="go('home')">‹ Indietro</button><h2>Archivio alimenti</h2><button class="pr sm" onclick="openFood(-1)">➕ Nuovo</button></div>
+<div class="two" style="margin-bottom:8px"><button class="gh" onclick="$('cf').click()">⬆ Importa CSV</button><button class="gh" onclick="exportCsv()">⬇ Esporta CSV</button></div><input type="file" id="cf" accept=".csv,.txt,text/csv" hidden onchange="importCsv(this)">
 <input id="dq" type="search" placeholder="🔍 Cerca alimento" oninput="renderDb()"><p class="mt" id="dc"></p><div id="dbList"></div><footer>made by MicheleRu</footer></section>
 </div>
 <div class="ov" id="om"><div class="md"><div class="mh"><h2>Opzioni</h2><button class="gh sm" onclick="show('om',0)">✖</button></div><div class="menu">
@@ -71,7 +73,7 @@ footer{text-align:center;color:#64748b;font-size:12px;padding:14px}
 <div class="ov" id="ot"><div class="md"><div class="mh"><h2>Obiettivi giornalieri</h2><button class="gh sm" onclick="show('ot',0)">✔ Fatto</button></div>
 <div class="g2"><div class="fld"><label>Kcal</label><input id="t_kcal" type="number" inputmode="decimal" oninput="setT('kcal',this.value)"></div><div class="fld"><label>Carboidrati (g)</label><input id="t_carbs" type="number" inputmode="decimal" oninput="setT('carbs',this.value)"></div><div class="fld"><label>Proteine (g)</label><input id="t_pro" type="number" inputmode="decimal" oninput="setT('pro',this.value)"></div><div class="fld"><label>Grassi (g)</label><input id="t_fat" type="number" inputmode="decimal" oninput="setT('fat',this.value)"></div></div></div></div>
 <div class="ov" id="of"><div class="md"><div class="mh"><h2 id="ft">Alimento</h2><button class="gh sm" onclick="show('of',0)">✖</button></div>
-<div class="fld"><label>Nome</label><input id="dN" placeholder="Es. Riso basmati"></div>
+<div class="fld"><label>Nome</label><input id="dN" placeholder="Es. Pasta integrale"></div><div class="fld"><label>Marca (facoltativa)</label><input id="dB" placeholder="Es. nome del produttore"></div>
 <div class="g2"><div class="fld"><label>Stato</label><select id="dS"><option value="">—</option><option>crudo</option><option>cotto</option></select></div><div class="fld"><label>Kcal / 100 g</label><input id="dK" type="number" inputmode="decimal"></div></div>
 <div class="g3"><div class="fld"><label>Carbo</label><input id="dC" type="number" inputmode="decimal"></div><div class="fld"><label>Proteine</label><input id="dP" type="number" inputmode="decimal"></div><div class="fld"><label>Grassi</label><input id="dF" type="number" inputmode="decimal"></div></div>
 <div class="sec">Compila da etichetta</div><div class="g2"><select id="ocrL" aria-label="Lingua"><option value="ita+eng">Italiano / Inglese</option><option value="fra+eng">Français</option><option value="spa+eng">Español</option><option value="deu+eng">Deutsch</option><option value="por+eng">Português</option><option value="ita+eng+fra+deu+spa">Multilingua (lento)</option></select><button class="gh" onclick="$('lf').click()">📷 Leggi etichetta</button></div>
@@ -86,7 +88,7 @@ const $=id=>document.getElementById(id),num=v=>parseFloat(v)||0,r1=v=>Math.round
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
 const T0=()=>({kcal:0,carbs:0,pro:0,fat:0}),emptyData=()=>{const d={};days.forEach(x=>{d[x]={};meals.forEach(m=>d[x][m]=[])});return d};
-function fixData(d){const o=emptyData();if(d&&typeof d==='object')days.forEach(x=>meals.forEach(m=>{const a=d[x]&&d[x][m];if(Array.isArray(a))o[x][m]=a.filter(f=>f&&typeof f==='object').map(f=>({name:String(f.name||''),weight:num(f.weight)||'',kcal:num(f.kcal),carbs:num(f.carbs),pro:num(f.pro),fat:num(f.fat),manual:!!f.manual}))}));return o}
+function fixData(d){const o=emptyData();if(d&&typeof d==='object')days.forEach(x=>meals.forEach(m=>{const a=d[x]&&d[x][m];if(Array.isArray(a))o[x][m]=a.filter(f=>f&&typeof f==='object').map(f=>({name:String(f.name||''),weight:num(f.weight)||'',kcal:num(f.kcal),carbs:num(f.carbs),pro:num(f.pro),fat:num(f.fat),manual:!!f.manual,alt:Math.max(0,Math.floor(num(f.alt)))}))}));return o}
 const load=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
 const DEF=[['Avena in fiocchi','crudo',370,66,13,7],['Latte proteico','',55,4.8,7.5,.5],['Petto di pollo','crudo',110,0,23,1.2],['Riso basmati','crudo',350,78,8.5,.8],['Pasta integrale','crudo',345,65,12.5,2],["Olio extravergine d'oliva",'',884,0,0,100],['Mandorle sgusciate','',580,4.5,21,50],['Fesa di tacchino','',105,1,22,1.5]].map(a=>({name:a[0],stato:a[1],kcal:a[2],carbs:a[3],pro:a[4],fat:a[5]}));
 let app=load('dietApp'),cur=days[0],copied=null,undo=null,tt;
@@ -95,10 +97,8 @@ function fixApp(){if(!Array.isArray(app.db))app.db=[];if(!app.patients||typeof a
 fixApp();
 const P=()=>app.patients[app.cur],D=()=>P().data,isFree=(d,m)=>!!P().free[d+'|'+m],allFree=d=>meals.every(m=>isFree(d,m));
 function save(){try{localStorage.setItem('dietApp',JSON.stringify(app))}catch(e){alert('Impossibile salvare nel browser (memoria piena?). Fai un Backup.')}}
-function findDb(n){n=norm(n);if(!n)return null;let x=app.db.find(f=>norm(f.name)===n);if(x)return x;if(n.length>=3){const m=app.db.filter(f=>norm(f.name).includes(n));if(m.length===1)return m[0]}return null}
 const link=f=>f.name.trim()?findDb(f.name):null;
 function calc(f){const d=link(f);if(d&&!f.manual&&num(f.weight)>0){const k=num(f.weight)/100,o={};MK.forEach(x=>o[x]=num(d[x])*k);return o}return{kcal:num(f.kcal),carbs:num(f.carbs),pro:num(f.pro),fat:num(f.fat)}}
-function tot(a){const t=T0();a.forEach(f=>{if(!f.name.trim())return;const c=calc(f);MK.forEach(k=>t[k]+=c[k])});return t}
 function dayTot(d){const t=T0();meals.forEach(m=>{if(isFree(d,m))return;const x=tot(D()[d][m]);MK.forEach(k=>t[k]+=x[k])});return t}
 const L={kcal:'kcal',carbs:'Carbo',pro:'Pro',fat:'Grassi'};
 function sync(mi,i){const f=D()[cur][meals[mi]][i],r=$('r'+mi+'_'+i);if(!r)return;const c=calc(f),d=link(f),auto=!f.manual&&d&&num(f.weight)>0;
@@ -110,14 +110,14 @@ else b=f.manual?'<span class="i">✏️ valori manuali</span>':'<span class="o">
 if(c.kcal>0&&Math.abs(c.kcal-ck)>Math.max(25,c.kcal*.15))b+=' <span class="w">⚠ kcal≠macro ('+ck.toFixed(0)+')</span>';
 r.querySelector('.bd').innerHTML=b}
 function upd(mi,i,fd,el){const f=D()[cur][meals[mi]][i];
-if(fd==='name'){f.name=el.value.trim();const d=link(f);if(d){f.name=d.name;el.value=d.name}else if(!f.manual)MK.forEach(k=>f[k]=0)}
+if(fd==='name'){f.name=el.value.trim();const d=link(f);if(d){f.name=lbl(d);el.value=lbl(d)}else if(!f.manual)MK.forEach(k=>f[k]=0)}
 else if(fd==='weight')f.weight=num(el.value)||'';
 else{f[fd]=num(el.value);f.manual=true}
 sync(mi,i);save();totals()}
 function resetF(mi,i){const f=D()[cur][meals[mi]][i];if(!link(f))return alert('Questo alimento non è nell\'archivio: non c\'è nulla da ricalcolare.');f.manual=false;sync(mi,i);save();totals()}
-const addFood=mi=>{D()[cur][meals[mi]].push({name:'',weight:'',kcal:0,carbs:0,pro:0,fat:0,manual:false});save();renderMeals()};
+const addFood=(mi,al)=>{D()[cur][meals[mi]].push({name:'',weight:'',kcal:0,carbs:0,pro:0,fat:0,manual:false,alt:al||0});save();renderMeals()};
 const copyF=(mi,i)=>{copied=JSON.parse(JSON.stringify(D()[cur][meals[mi]][i]));renderMeals();toast('Alimento copiato: usa “Incolla” in un pasto')};
-const paste=mi=>{if(copied){D()[cur][meals[mi]].push(JSON.parse(JSON.stringify(copied)));save();renderMeals()}};
+const paste=(mi,al)=>{if(copied){const c=JSON.parse(JSON.stringify(copied));c.alt=al||0;D()[cur][meals[mi]].push(c);save();renderMeals()}};
 function delF(mi,i){const a=D()[cur][meals[mi]];undo={a,i,f:a[i]};a.splice(i,1);save();renderMeals();toast('Alimento eliminato',1)}
 function doUndo(){if(undo){undo.a.splice(undo.i,0,undo.f);undo=null;save();renderMeals();$('toast').style.display='none'}}
 function toast(m,u){$('tm').textContent=m;$('toast').querySelector('button').style.display=u?'':'none';$('toast').style.display='flex';clearTimeout(tt);tt=setTimeout(()=>$('toast').style.display='none',6000)}
@@ -129,12 +129,10 @@ let eq=null;
 function openEq(mi,i){const f=D()[cur][meals[mi]][i],d=link(f);if(!d||!(num(f.weight)>0))return alert("Per le equivalenze scegli un alimento dell'archivio e inserisci i grammi.");const c=calc(f),v={carbs:c.carbs*4,pro:c.pro*4,fat:c.fat*9};eq={mi,i,b:Object.keys(v).sort((a,b)=>v[b]-v[a])[0]};show('oe',1);renderEq()}
 function renderEq(){const f=D()[cur][meals[eq.mi]][eq.i],c=calc(f),a=c[eq.b],nm={kcal:'Calorie',carbs:'Carboidrati',pro:'Proteine',fat:'Grassi'};
 $('eh').innerHTML=`<p style="font-size:14px"><b>${f.weight}g ${esc(f.name)}</b> = ${c.kcal.toFixed(0)} kcal · C ${c.carbs.toFixed(1)}g · P ${c.pro.toFixed(1)}g · G ${c.fat.toFixed(1)}g</p><div class="row" style="justify-content:flex-start">Equivalenza per: <select onchange="eq.b=this.value;renderEq()">${['carbs','pro','fat','kcal'].map(k=>`<option value="${k}"${k===eq.b?' selected':''}>${nm[k]}</option>`).join('')}</select></div>`;
-const L=app.db.map((x,j)=>({x,j})).filter(o=>num(o.x[eq.b])>=1&&norm(o.x.name)!==norm(f.name)).map(o=>{const g=Math.round(a/num(o.x[eq.b])*100);return{...o,g,k:num(o.x.kcal)*g/100}}).sort((p,q)=>Math.abs(p.k-c.kcal)-Math.abs(q.k-c.kcal));
-$('el').innerHTML=L.map(o=>`<div class="di"><div><b>${esc(o.x.name)}</b> ${o.x.stato?`<span class="i">${esc(o.x.stato)}</span>`:''}<small>${o.g}g → ${o.k.toFixed(0)} kcal (${o.k-c.kcal>=0?'+':''}${(o.k-c.kcal).toFixed(0)})</small></div><button class="b-ad" onclick="useEq(${o.j},${o.g})">Usa</button></div>`).join('')||"<p>Nessun alimento equivalente nell'archivio.</p>"}
-function useEq(j,g){const f=D()[cur][meals[eq.mi]][eq.i];f.name=app.db[j].name;f.weight=g;f.manual=false;save();show('oe',0);renderMeals()}
-function renderMeals(){$('meals').innerHTML=meals.map((m,mi)=>`<section class="card"><div class="mh"><h2 style="color:${colors[mi]}">${m}</h2><div>${isFree(cur,m)?'':(copied?`<button class="b-pa" onclick="paste(${mi})">📋 Incolla</button>`:'')+`<button class="b-ad" onclick="addFood(${mi})">➕ Aggiungi</button>`}<button class="b-db" onclick="toggleFree(${mi})">🍕 ${isFree(cur,m)?'Togli libero':'Pasto libero'}</button></div></div>${isFree(cur,m)?'':D()[cur][m].map((f,i)=>rowHtml(mi,i,f)).join('')}<div class="mf" id="mf${mi}"></div></section>`).join('');
-meals.forEach((m,mi)=>D()[cur][m].forEach((f,i)=>sync(mi,i)));totals()}
-function totals(){meals.forEach((m,mi)=>{if(isFree(cur,m)){$('mf'+mi).innerHTML='<b>🍕 Pasto libero: non conteggiato nei totali</b>';return}const t=tot(D()[cur][m]);$('mf'+mi).innerHTML=`<b>Totale ${m}</b><span>🔥 ${t.kcal.toFixed(0)} kcal</span><span>🌾 ${t.carbs.toFixed(1)}g</span><span>🥩 ${t.pro.toFixed(1)}g</span><span>🥑 ${t.fat.toFixed(1)}g</span>`});
+const L=app.db.map((x,j)=>({x,j})).filter(o=>num(o.x[eq.b])>=1&&norm(lbl(o.x))!==norm(f.name)).map(o=>{const g=Math.round(a/num(o.x[eq.b])*100);return{...o,g,k:num(o.x.kcal)*g/100}}).sort((p,q)=>Math.abs(p.k-c.kcal)-Math.abs(q.k-c.kcal));
+$('el').innerHTML=L.map(o=>`<div class="di"><div><b>${esc(o.x.name)}</b> ${o.x.brand?`<span class="i" style="color:#b45309">${esc(o.x.brand)}</span> `:''}${o.x.stato?`<span class="i">${esc(o.x.stato)}</span>`:''}<small>${o.g}g → ${o.k.toFixed(0)} kcal (${o.k-c.kcal>=0?'+':''}${(o.k-c.kcal).toFixed(0)})</small></div><button class="b-ad" onclick="useEq(${o.j},${o.g})">Usa</button></div>`).join('')||"<p>Nessun alimento equivalente nell'archivio.</p>"}
+function useEq(j,g){const f=D()[cur][meals[eq.mi]][eq.i];f.name=lbl(app.db[j]);f.weight=g;f.manual=false;save();show('oe',0);renderMeals()}
+function totals(){meals.forEach((m,mi)=>{if(isFree(cur,m)){$('mf'+mi).innerHTML='<b>🍕 Pasto libero: non conteggiato nei totali</b>';return}const t=tot(D()[cur][m]),ao=altList(D()[cur][m]),ex=ao.slice(1).map((a,n)=>{const x=tot(D()[cur][m],a);return'<span style="background:#fef3c7;flex-basis:100%;text-align:right">Opz. '+(n+2)+': '+x.kcal.toFixed(0)+' kcal · C '+x.carbs.toFixed(1)+'g · P '+x.pro.toFixed(1)+'g · G '+x.fat.toFixed(1)+'g</span>'}).join('');$('mf'+mi).innerHTML=`<b>Totale ${m}${ao.length>1?' · Opz. 1':''}</b><span>🔥 ${t.kcal.toFixed(0)} kcal</span><span>🌾 ${t.carbs.toFixed(1)}g</span><span>🥩 ${t.pro.toFixed(1)}g</span><span>🥑 ${t.fat.toFixed(1)}g</span>${ex}`});
 const t=dayTot(cur),tg=P().targets,ic=['🔥','🌾','🥩','🥑'],nm=['Calorie','Carboidrati','Proteine','Grassi'],bg=['#dc2626','#d97706','#0284c7','#7e22ce'];
 $('dash').innerHTML=MK.map((k,j)=>{const g=num(tg[k]),u=k==='kcal'?'':'g',df=t[k]-g;return`<div class="sc" style="background:${bg[j]}"><small>${nm[j]}</small><b>${ic[j]} ${t[k].toFixed(k==='kcal'?0:1)}${u}</b>${g?`<div class="pb"><i style="width:${Math.min(100,t[k]/g*100)}%"></i></div><small>obiettivo ${g}${u} (${df>=0?'+':''}${df.toFixed(0)})</small>`:''}</div>`}).join('');
 const rows=days.map(d=>({d,t:dayTot(d)})),act=rows.filter(r=>r.t.kcal>0&&!meals.some(m=>isFree(r.d,m))),av=k=>act.length?act.reduce((s,r)=>s+r.t[k],0)/act.length:0;
@@ -144,14 +142,10 @@ function setWeekend(){if(!confirm('Impostare come liberi Sabato dopo pranzo (Spu
 function setT(k,v){P().targets[k]=num(v);save();totals()}
 function backup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(app)],{type:'application/json'}));a.download='backup_piani_'+new Date().toISOString().slice(0,10)+'.json';a.click()}
 function restore(inp){const fr=new FileReader();fr.onload=()=>{try{const x=JSON.parse(fr.result);if(!x||!x.patients)throw 0;if(!confirm('Sostituire TUTTI i dati attuali con il backup?'))return;app=x;fixApp();save();cur=days[0];renderAll()}catch(e){alert('File di backup non valido.')}};if(inp.files[0])fr.readAsText(inp.files[0]);inp.value=''}
-function printPlan(){let h=`<div class="ph"><h1>🥗 PIANO ALIMENTARE SETTIMANALE</h1><span>${esc((P().name||'PAZIENTE').toUpperCase())}</span></div><table><tr><th></th>${days.map(d=>`<th>${d}</th>`).join('')}</tr>`;
-meals.forEach((m,mi)=>{h+=`<tr><th style="background:${colors[mi]}">${m}</th>`+days.map(d=>{if(isFree(d,m))return'<td class="e">🍕 Pasto libero</td>';const a=D()[d][m].filter(f=>f.name.trim());return a.length?`<td><ul>${a.map(f=>`<li><span>${esc(f.name)}</span><b>${f.weight?f.weight+'g':''}</b></li>`).join('')}</ul><em>${tot(a).kcal.toFixed(0)} kcal</em></td>`:'<td class="e">—</td>'}).join('')+'</tr>'});
-h+='<tr><th class="tt">TOTALE</th>'+days.map(d=>{if(allFree(d))return'<td class="tt2">🍕 Giorno libero</td>';const t=dayTot(d);return`<td class="tt2">${t.kcal.toFixed(0)} kcal<br>C ${t.carbs.toFixed(0)}g · P ${t.pro.toFixed(0)}g · G ${t.fat.toFixed(0)}g</td>`}).join('')+'</tr></table><p class="cr">made by MicheleRu</p>';
-$('print').innerHTML=h;window.print()}
 async function exportExcel(){try{const wb=new ExcelJS.Workbook(),ws=wb.addWorksheet('Piano Alimentare',{views:[{showGridLines:false}]}),G='FF436436',DG='FF5A7338',LG='FFABC28C',BG='FFEBEFDE',b={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}},fill=a=>({type:'pattern',pattern:'solid',fgColor:{argb:a}});
 [['SETTIMANALE',12,1],['Piano alimentare',26],[(P().name||'NOME COGNOME').toUpperCase(),14]].forEach(([t,s,it],r)=>{ws.mergeCells(r+1,1,r+1,10);const c=ws.getCell(r+1,1);c.value=t;c.font={size:s,italic:!!it,color:{argb:G}};c.alignment={horizontal:'center',vertical:'middle'};c.fill=fill(BG)});
 ws.addRow(['Giorno',...meals,'Kcal','Proteine (g)','Carboidrati (g)','Grassi (g)']).eachCell(c=>{c.fill=fill(DG);c.font={color:{argb:'FFFFFFFF'},bold:true};c.border=b;c.alignment={vertical:'middle',horizontal:'center'}});
-days.forEach(d=>{const t=dayTot(d),r=ws.addRow([d,...meals.map(m=>{if(isFree(d,m))return'🍕 Pasto libero';const a=D()[d][m].filter(f=>f.name.trim());if(!a.length)return'';const x=tot(a);return a.map(f=>(f.weight?f.weight+'g ':'')+f.name).join(' / ')+'\n'+x.pro.toFixed(0)+'g proteine · '+x.kcal.toFixed(0)+' kcal'}),...(allFree(d)?['','','','']:[Math.round(t.kcal),Math.round(t.pro),Math.round(t.carbs),Math.round(t.fat)])]);r.height=60;r.eachCell((c,n)=>{c.border=b;c.alignment={vertical:'middle',horizontal:n>6?'center':'left',wrapText:true};if(n===1)c.fill=fill(LG)})});
+days.forEach(d=>{const t=dayTot(d),r=ws.addRow([d,...meals.map(m=>{if(isFree(d,m))return'🍕 Pasto libero';const arr=D()[d][m],ao=altList(arr),opt=al=>arr.filter(f=>f.name.trim()&&(f.alt||0)===al),tx=al=>opt(al).map(f=>(f.weight?f.weight+'g ':'')+f.name).join(' / ');if(!opt(ao[0]).length)return'';const x=tot(arr,ao[0]);let r=tx(ao[0])+'\n'+(ao.length>1?x.kcal.toFixed(0)+' kcal · C '+x.carbs.toFixed(0)+'g · P '+x.pro.toFixed(0)+'g · G '+x.fat.toFixed(0)+'g':x.pro.toFixed(0)+'g proteine · '+x.kcal.toFixed(0)+' kcal');ao.slice(1).forEach((al,k)=>{if(opt(al).length){const y=tot(arr,al);r+='\n— Opzione '+(k+2)+': '+tx(al)+' ('+y.kcal.toFixed(0)+' kcal · C '+y.carbs.toFixed(0)+'g · P '+y.pro.toFixed(0)+'g · G '+y.fat.toFixed(0)+'g)'}});return r}),...(allFree(d)?['','','','']:[Math.round(t.kcal),Math.round(t.pro),Math.round(t.carbs),Math.round(t.fat)])]);r.height=96;r.eachCell((c,n)=>{c.border=b;c.alignment={vertical:'middle',horizontal:n>6?'center':'left',wrapText:true};if(n===1)c.fill=fill(LG)})});
 ws.addRow([]);const f=ws.addRow(['made by MicheleRu']);f.getCell(1).font={italic:true,color:{argb:G}};
 [14,30,30,30,30,30,10,14,16,12].forEach((w,i)=>ws.getColumn(i+1).width=w);
 saveAs(new Blob([await wb.xlsx.writeBuffer()]),'Piano_Alimentare_'+(P().name||'paziente').trim().replace(/[^\w\-]+/g,'_')+'.xlsx')}catch(e){alert('Errore nella creazione del file Excel: '+e.message)}}
@@ -168,17 +162,69 @@ function renderTop(){$('pt').textContent=P().name||'Senza nome';$('tabs').innerH
 function rowHtml(mi,i,f){const c=calc(f);return`<div class="fr" id="r${mi}_${i}"><div class="cn"><input aria-label="Alimento" autocomplete="off" placeholder="Alimento: inizia a scrivere" value="${esc(f.name)}" oninput="sug(this,${mi},${i})" onfocus="sug(this,${mi},${i})" onblur="setTimeout(sugHide,300)" onchange="upd(${mi},${i},'name',this)"><div class="sg"></div><small class="bd"></small></div><div class="nm"><label class="f"><span>g</span><input type="number" inputmode="decimal" min="0" data-f="weight" value="${f.weight||''}" onchange="upd(${mi},${i},'weight',this)"></label>${MK.map(k=>`<label class="f"><span>${L[k]}</span><input type="number" inputmode="decimal" min="0" step="0.1" data-f="${k}" value="${val(c[k])}" onchange="upd(${mi},${i},'${k}',this)"></label>`).join('')}</div><div class="ca"><button class="b-eq" title="Equivalenze" onclick="openEq(${mi},${i})">⇄</button><button class="gh" title="Copia" onclick="copyF(${mi},${i})">📋</button><button class="gh" title="Ricalcola dall'archivio" onclick="resetF(${mi},${i})">↺</button><button class="b-dl" title="Elimina" onclick="delF(${mi},${i})">❌</button></div></div>`}
 const sugHide=()=>document.querySelectorAll('.sg').forEach(b=>b.style.display='none');
 function sug(el,mi,i){const q=norm(el.value),box=el.parentNode.querySelector('.sg');document.querySelectorAll('.sg').forEach(b=>{if(b!==box)b.style.display='none'});
-const m=app.db.map((x,j)=>({x,j})).filter(o=>!q||norm(o.x.name).includes(q)).sort((a,b)=>(norm(a.x.name).startsWith(q)?0:1)-(norm(b.x.name).startsWith(q)?0:1)||a.x.name.localeCompare(b.x.name)).slice(0,8);
+const m=app.db.map((x,j)=>({x,j})).filter(o=>!q||match(o.x,q)).sort((a,b)=>(norm(lbl(a.x)).startsWith(q)?0:1)-(norm(lbl(b.x)).startsWith(q)?0:1)||lbl(a.x).localeCompare(lbl(b.x))).slice(0,8);
 if(!m.length){box.style.display='none';return}
-box.innerHTML=m.map(o=>`<div class="si" onclick="pickSug(${mi},${i},${o.j})"><b>${esc(o.x.name)}</b> ${o.x.stato?`<i>${esc(o.x.stato)}</i>`:''}<small>${o.x.kcal} kcal · C ${o.x.carbs} · P ${o.x.pro} · G ${o.x.fat} (per 100 g)</small></div>`).join('');box.style.display='block'}
-function pickSug(mi,i,j){const r=$('r'+mi+'_'+i),el=r.querySelector('.cn input');el.value=app.db[j].name;upd(mi,i,'name',el);sugHide();const w=r.querySelector('[data-f=weight]');if(w&&!w.value)w.focus()}
-function renderDb(){const q=norm($('dq').value),a=app.db.map((f,i)=>({f,i})).filter(o=>!q||norm(o.f.name).includes(q)).sort((x,y)=>x.f.name.localeCompare(y.f.name));$('dc').textContent=a.length+' aliment'+(a.length===1?'o':'i')+' · valori per 100 g';
-$('dbList').innerHTML=a.map(o=>`<button class="pc" onclick="openFood(${o.i})"><span><b>${esc(o.f.name)}</b>${o.f.stato?`<i>${esc(o.f.stato)}</i>`:''}<small>${o.f.kcal} kcal · C ${o.f.carbs} · P ${o.f.pro} · G ${o.f.fat}</small></span><span>›</span></button>`).join('')||'<p class="mt">Nessun alimento trovato.</p>'}
-function openFood(i){editIdx=i;const f=i>=0?app.db[i]:{name:'',stato:'',kcal:'',carbs:'',pro:'',fat:''};$('ft').textContent=i>=0?'Modifica alimento':'Nuovo alimento';$('dN').value=f.name;$('dS').value=f.stato||'';$('dK').value=f.kcal;$('dC').value=f.carbs;$('dP').value=f.pro;$('dF').value=f.fat;$('ocrS').textContent='';$('ocrT').textContent='';$('dDel').style.display=i>=0?'':'none';show('of',1)}
-function saveDb(){const name=$('dN').value.trim();if(!name)return alert("Inserisci il nome dell'alimento.");const o={name,stato:$('dS').value,kcal:num($('dK').value),carbs:num($('dC').value),pro:num($('dP').value),fat:num($('dF').value)};
-if(editIdx>=0)app.db[editIdx]=o;else{const x=app.db.findIndex(f=>norm(f.name)===norm(name));x>=0?app.db[x]=o:app.db.push(o)}
-save();show('of',0);renderDb();if(view==='plan')renderMeals()}
+box.innerHTML=m.map(o=>`<div class="si" onclick="pickSug(${mi},${i},${o.j})"><b>${esc(o.x.name)}</b>${o.x.brand?` <i class="br">${esc(o.x.brand)}</i>`:''} ${o.x.stato?`<i>${esc(o.x.stato)}</i>`:''}<small>${o.x.kcal} kcal · C ${o.x.carbs} · P ${o.x.pro} · G ${o.x.fat} (per 100 g)</small></div>`).join('');box.style.display='block'}
+function pickSug(mi,i,j){const r=$('r'+mi+'_'+i),el=r.querySelector('.cn input');el.value=lbl(app.db[j]);upd(mi,i,'name',el);sugHide();const w=r.querySelector('[data-f=weight]');if(w&&!w.value)w.focus()}
 function delDb(){if(editIdx<0||!confirm('Eliminare "'+app.db[editIdx].name+'" dall\'archivio? Gli alimenti già nei piani resteranno con gli ultimi valori calcolati.'))return;app.db.splice(editIdx,1);save();show('of',0);renderDb()}
+function parseCsv(t){t=t.replace(/^\ufeff/,'');const first=t.split(/\r?\n/)[0]||'',dl=[';','\t',','].sort((a,b)=>first.split(b).length-first.split(a).length)[0],rows=[];let r=[],c='',q=false;
+for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}else if(ch==='"')q=true;else if(ch===dl){r.push(c);c=''}else if(ch==='\n'){r.push(c);rows.push(r);r=[];c=''}else if(ch!=='\r')c+=ch}
+if(c!==''||r.length){r.push(c);rows.push(r)}return rows.filter(x=>x.some(v=>v.trim()))}
+const pn=v=>{const m=String(v==null?'':v).replace(/\s/g,'').replace(',','.').match(/\d+(\.\d+)?/);return m?parseFloat(m[0]):null};
+function mapCols(h){const m={};h.forEach((x,i)=>{const n=norm(x);
+if(m.name==null&&/(^nome|name|aliment|prodott|food|descriz)/.test(n)&&!/brand|marca|categ/.test(n))m.name=i;
+else if(m.brand==null&&/(marca|brand)/.test(n))m.brand=i;
+else if(m.stato==null&&/^(stato|cottura|state)/.test(n))m.stato=i;
+else if(m.kcal==null&&/(kcal|calor|^energia$)/.test(n))m.kcal=i;
+else if(m.carbs==null&&/(carbo|glucid|carbs)/.test(n)&&!/zucch|sugar|di cui/.test(n))m.carbs=i;
+else if(m.pro==null&&/prot/.test(n))m.pro=i;
+else if(m.fat==null&&/(gras|fat|lipid)/.test(n)&&!/satur|acidi/.test(n))m.fat=i});return m}
+async function importCsv(inp){const f=inp.files[0];inp.value='';if(!f)return;try{const buf=await f.arrayBuffer();let t;try{t=new TextDecoder('utf-8',{fatal:true}).decode(buf)}catch(e){t=new TextDecoder('windows-1252').decode(buf)}
+const rows=parseCsv(t);if(rows.length<2)throw new Error('il file è vuoto o ha una sola riga.');const m=mapCols(rows[0]);
+if(m.name==null)throw new Error('non trovo la colonna con il nome degli alimenti (es. "Nome").');
+if(MK.every(k=>m[k]==null))throw new Error('non trovo le colonne di kcal, carboidrati, proteine o grassi.');
+const have=new Set(app.db.map(x=>norm(lbl(x)))),add=[];let dup=0,bad=0;
+rows.slice(1,5001).forEach(r=>{const name=(r[m.name]||'').trim(),brand=m.brand!=null?(r[m.brand]||'').trim():'',v={};MK.forEach(k=>v[k]=m[k]==null?null:pn(r[m[k]]));
+if(!name||MK.every(k=>v[k]==null)){bad++;return}
+if(v.kcal==null)v.kcal=Math.round(num(v.carbs)*4+num(v.pro)*4+num(v.fat)*9);
+if(v.kcal>950||v.carbs>100||v.pro>100||v.fat>100){bad++;return}
+const key=norm(brand?name+' ('+brand+')':name);if(have.has(key)){dup++;return}have.add(key);
+const st=m.stato!=null?norm(r[m.stato]||''):'';
+add.push({name,brand,stato:/crud/.test(st)?'crudo':/cott/.test(st)?'cotto':'',kcal:r1(v.kcal),carbs:r1(num(v.carbs)),pro:r1(num(v.pro)),fat:r1(num(v.fat))})});
+if(!add.length)throw new Error('nessun alimento nuovo da importare ('+dup+' già presenti, '+bad+' righe non valide).');
+if(!confirm('Importare '+add.length+' nuovi alimenti?\n'+dup+' già presenti (saltati), '+bad+' righe non valide (ignorate).'+(rows.length>5001?'\nLetti solo i primi 5000.':'')+'\nI valori devono essere per 100 g.'))return;
+app.db.push(...add);save();renderDb();toast(add.length+' alimenti importati')}catch(e){alert('Importazione non riuscita: '+e.message)}}
+function exportCsv(){if(!app.db.length)return alert("L'archivio è vuoto.");const q=v=>'"'+String(v).replace(/"/g,'""')+'"',n=v=>String(v).replace('.',',');
+const t=['Nome;Marca;Stato;Kcal;Carboidrati;Proteine;Grassi',...app.db.map(f=>[q(f.name),q(f.brand||''),f.stato||'',n(f.kcal),n(f.carbs),n(f.pro),n(f.fat)].join(';'))].join('\r\n');
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+t],{type:'text/csv;charset=utf-8'}));a.download='archivio_alimenti.csv';a.click()}
+const lbl=x=>x.brand?x.name+' ('+x.brand+')':x.name;
+const match=(x,q)=>q.split(/\s+/).filter(Boolean).every(t=>norm(lbl(x)).includes(t));
+const baseAlt=a=>a.length?Math.min(...a.map(f=>f.alt||0)):0;
+const altList=a=>a.length?[...new Set(a.map(f=>f.alt||0))].sort((x,y)=>x-y):[0];
+function findDb(n){n=norm(n);if(!n)return null;let x=app.db.find(f=>norm(lbl(f))===n);if(x)return x;if(n.length>=3){const m=app.db.filter(f=>match(f,n));if(m.length===1)return m[0]}return null}
+function tot(a,alt){if(alt===undefined)alt=baseAlt(a);const t=T0();a.forEach(f=>{if((f.alt||0)!==alt||!f.name.trim())return;const c=calc(f);MK.forEach(k=>t[k]+=c[k])});return t}
+function renderMeals(){$('meals').innerHTML=meals.map((m,mi)=>{const arr=D()[cur][m],fr=isFree(cur,m),ao=altList(arr);
+const body=fr?'':ao.map((al,n)=>(ao.length>1?`<div class="oh"><b>Opzione ${n+1}</b><button class="gh sm" onclick="delAlt(${mi},${al})" aria-label="Rimuovi opzione">✖</button></div>`:'')+arr.map((f,i)=>(f.alt||0)===al?rowHtml(mi,i,f):'').join('')+`<div class="oa"><button class="b-ad sm" onclick="addFood(${mi},${al})">➕ Alimento</button>${copied?`<button class="b-pa sm" onclick="paste(${mi},${al})">📋 Incolla</button>`:''}</div>`).join('');
+return`<section class="card"><div class="mh"><h2 style="color:${colors[mi]}">${m}</h2><div>${fr?'':`<button class="b-db" onclick="addAlt(${mi})">🔀 Alternativa</button>`}<button class="gh" onclick="toggleFree(${mi})">🍕 ${fr?'Togli libero':'Libero'}</button></div></div>${body}<div class="mf" id="mf${mi}"></div></section>`}).join('');
+meals.forEach((m,mi)=>D()[cur][m].forEach((f,i)=>sync(mi,i)));totals()}
+function addAlt(mi){const a=D()[cur][meals[mi]],n=a.length?Math.max(...a.map(f=>f.alt||0))+1:1;if(!a.length)a.push({name:'',weight:'',kcal:0,carbs:0,pro:0,fat:0,manual:false,alt:0});a.push({name:'',weight:'',kcal:0,carbs:0,pro:0,fat:0,manual:false,alt:n});save();renderMeals()}
+function delAlt(mi,al){const a=D()[cur][meals[mi]];if(a.some(f=>(f.alt||0)===al&&f.name.trim())&&!confirm('Eliminare questa opzione con i suoi alimenti?'))return;D()[cur][meals[mi]]=a.filter(f=>(f.alt||0)!==al);undo=null;save();renderMeals()}
+function renderDb(){const q=norm($('dq').value),a=app.db.map((f,i)=>({f,i})).filter(o=>!q||match(o.f,q)).sort((x,y)=>x.f.name.localeCompare(y.f.name)||(x.f.brand||'').localeCompare(y.f.brand||''));$('dc').textContent=a.length+' aliment'+(a.length===1?'o':'i')+' · valori per 100 g';
+$('dbList').innerHTML=a.map(o=>`<button class="pc" onclick="openFood(${o.i})"><span><b>${esc(o.f.name)}</b>${o.f.brand?`<i class="br">${esc(o.f.brand)}</i>`:''}${o.f.stato?`<i>${esc(o.f.stato)}</i>`:''}<small>${o.f.kcal} kcal · C ${o.f.carbs} · P ${o.f.pro} · G ${o.f.fat}</small></span><span>›</span></button>`).join('')||'<p class="mt">Nessun alimento trovato.</p>'}
+function openFood(i){editIdx=i;const f=i>=0?app.db[i]:{name:'',brand:'',stato:'',kcal:'',carbs:'',pro:'',fat:''};$('ft').textContent=i>=0?'Modifica alimento':'Nuovo alimento';$('dN').value=f.name;$('dB').value=f.brand||'';$('dS').value=f.stato||'';$('dK').value=f.kcal;$('dC').value=f.carbs;$('dP').value=f.pro;$('dF').value=f.fat;$('ocrS').textContent='';$('ocrT').textContent='';$('dDel').style.display=i>=0?'':'none';show('of',1)}
+function saveDb(){const name=$('dN').value.trim();if(!name)return alert("Inserisci il nome dell'alimento.");const o={name,brand:$('dB').value.trim(),stato:$('dS').value,kcal:num($('dK').value),carbs:num($('dC').value),pro:num($('dP').value),fat:num($('dF').value)},key=norm(lbl(o)),x=app.db.findIndex((f,i)=>norm(lbl(f))===key&&i!==editIdx);
+if(x>=0&&!confirm('Esiste già "'+lbl(o)+'". Sostituirlo?'))return;
+if(editIdx>=0){const old=lbl(app.db[editIdx]);app.db[editIdx]=o;if(old!==lbl(o))Object.values(app.patients).forEach(p=>days.forEach(d=>meals.forEach(m=>p.data[d][m].forEach(f=>{if(f.name===old)f.name=lbl(o)}))));if(x>=0)app.db.splice(x,1)}else if(x>=0)app.db[x]=o;else app.db.push(o);
+save();show('of',0);renderDb();if(view==='plan')renderMeals()}
+function printPlan(){const nm=esc((P().name||'PAZIENTE').toUpperCase()),refs=[],li=fs=>'<ul>'+fs.map(f=>`<li><span>${esc(f.name)}</span><b>${f.weight?f.weight+'g':''}</b></li>`).join('')+'</ul>',opt=(arr,al)=>arr.filter(f=>f.name.trim()&&(f.alt||0)===al);
+let h=`<div class="ph"><h1>🥗 PIANO ALIMENTARE SETTIMANALE</h1><span>${nm}</span></div><table><tr><th></th>${days.map(d=>`<th>${d}</th>`).join('')}</tr>`;
+meals.forEach((m,mi)=>{h+=`<tr><th style="background:${colors[mi]}">${m}</th>`+days.map(d=>{if(isFree(d,m))return'<td class="e">🍕 Pasto libero</td>';const arr=D()[d][m],ao=altList(arr),a=opt(arr,ao[0]),oth=ao.slice(1).filter(al=>opt(arr,al).length);let b='';
+if(oth.length){refs.push({n:refs.length+1,d,m,ao});b=`<span class="bg">🔀 #${refs.length}</span>`}
+return a.length?`<td>${li(a)}<em>${tot(arr,ao[0]).kcal.toFixed(0)} kcal</em>${b}</td>`:'<td class="e">—</td>'}).join('')+'</tr>'});
+h+='<tr><th class="tt">TOTALE</th>'+days.map(d=>{if(allFree(d))return'<td class="tt2">🍕 Giorno libero</td>';const t=dayTot(d);return`<td class="tt2">${t.kcal.toFixed(0)} kcal<br>C ${t.carbs.toFixed(0)}g · P ${t.pro.toFixed(0)}g · G ${t.fat.toFixed(0)}g</td>`}).join('')+'</tr></table><p class="cr">made by MicheleRu</p>';
+if(refs.length)h+=`<div class="alp"><div class="ph"><h1>🔀 ALTERNATIVE AI PASTI</h1><span>${nm}</span></div><p class="cr" style="text-align:left;margin:3px 0 0">Tra parentesi: differenza rispetto all'Opzione 1.</p><div class="ag">`+refs.map(r=>{const arr=D()[r.d][r.m],on=r.ao.map((al,k)=>({k:k+1,fs:opt(arr,al),t:tot(arr,al)})).filter(o=>o.fs.length),b0=on[0].t,dl=(v,b,dc)=>{const x=v-b;return Math.abs(x)<.05?'':` <small>(${x>0?'+':''}${x.toFixed(dc)})</small>`};
+return`<div class="ab"><b>#${r.n} · ${r.d} · ${r.m}</b><div class="ao">`+on.map(o=>`<div><u>Opzione ${o.k}</u>${li(o.fs)}</div>`).join('')+'</div><table class="cmp"><tr><th></th><th>Kcal</th><th>Carbo</th><th>Prot.</th><th>Grassi</th></tr>'+on.map((o,n)=>`<tr><td>Opz. ${o.k}</td><td>${o.t.kcal.toFixed(0)}${n?dl(o.t.kcal,b0.kcal,0):''}</td><td>${o.t.carbs.toFixed(1)}g${n?dl(o.t.carbs,b0.carbs,1):''}</td><td>${o.t.pro.toFixed(1)}g${n?dl(o.t.pro,b0.pro,1):''}</td><td>${o.t.fat.toFixed(1)}g${n?dl(o.t.fat,b0.fat,1):''}</td></tr>`).join('')+'</table></div>'}).join('')+'</div><p class="cr">made by MicheleRu</p></div>';
+$('print').innerHTML=h;window.print()}
 const loadScript=u=>new Promise((ok,ko)=>{const e=document.createElement('script');e.src=u;e.onload=ok;e.onerror=()=>ko(new Error('Lettore OCR non raggiungibile: serve la connessione internet.'));document.head.appendChild(e)});
 function parseLabel(t){const L=t.replace(/\|/g,' ').replace(/,/g,'.').split('\n'),ex=/di cui|satur|gesätt|gesatt|mono|poli|zuccher|sugar|sucre|az[uú]car|zucker|a[cç][uú]car|amido|starch|davon|dont|of which|trans/i;
 const num1=(l,re)=>{const q=(l.replace(re,'|').split('|')[1]||'').match(/\d+(\.\d+)?/);return q?parseFloat(q[0]):null};
